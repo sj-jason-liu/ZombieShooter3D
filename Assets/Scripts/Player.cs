@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
         }
 
         velocity.y = _yVelocity;
+        velocity = transform.TransformDirection(velocity);
         _character.Move(velocity * Time.deltaTime);
     }
 }
