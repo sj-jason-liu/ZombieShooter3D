@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
     private float _gravity = 1f;
     [SerializeField]
     private float _jumpForce = 3f;
-    [SerializeField]
-    private float _rotateSpeed = 8f;
+    [SerializeField][Range(0.5f, 2f)]
+    private float _mouseSensitivity = 1f;
     private float _yVelocity;
 
     private Camera _camera;
@@ -36,23 +36,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        CalculatingMovement();
 
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        //move mouse x to rotate Player.y == left and right
-        //move mouse y to rotate camera.x
-        Vector3 currentRotation = transform.localEulerAngles;
-        currentRotation.y += mouseX;
-        transform.localRotation = Quaternion.AngleAxis(currentRotation.y, Vector3.up);
-
-        Vector3 currentCameraRotation = _camera.transform.localEulerAngles;
-        currentCameraRotation.x -= mouseY;
-        _camera.transform.localRotation = Quaternion.AngleAxis(currentCameraRotation.x, Vector3.right);
+        CameraMovement();
     }
 
-    void Movement()
+    void CalculatingMovement()
     {
         float horiInput = Input.GetAxisRaw("Horizontal");
         float vertiInput = Input.GetAxisRaw("Vertical");
@@ -74,5 +63,19 @@ public class Player : MonoBehaviour
         velocity.y = _yVelocity;
         velocity = transform.TransformDirection(velocity);
         _character.Move(velocity * Time.deltaTime);
+    }
+
+    void CameraMovement()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        Vector3 currentRotation = transform.localEulerAngles;
+        currentRotation.y += mouseX * _mouseSensitivity;
+        transform.localRotation = Quaternion.AngleAxis(currentRotation.y, Vector3.up);
+
+        Vector3 currentCameraRotation = _camera.transform.localEulerAngles;
+        currentCameraRotation.x -= mouseY * _mouseSensitivity;
+        _camera.transform.localRotation = Quaternion.AngleAxis(currentCameraRotation.x, Vector3.right);
     }
 }
