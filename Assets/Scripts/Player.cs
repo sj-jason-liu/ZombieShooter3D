@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Camera is NULL!");
         }
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -75,7 +76,8 @@ public class Player : MonoBehaviour
         transform.localRotation = Quaternion.AngleAxis(currentRotation.y, Vector3.up);
 
         Vector3 currentCameraRotation = _camera.transform.localEulerAngles;
-        currentCameraRotation.x -= mouseY * _mouseSensitivity;
+        currentCameraRotation.x += mouseY * -1 * _mouseSensitivity;
+        currentCameraRotation.x = Mathf.Clamp(currentCameraRotation.x, 0f, 15f);
         _camera.transform.localRotation = Quaternion.AngleAxis(currentCameraRotation.x, Vector3.right);
     }
 }
