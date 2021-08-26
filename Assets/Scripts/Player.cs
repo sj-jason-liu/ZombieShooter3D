@@ -31,15 +31,17 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Camera is NULL!");
         }
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
         CalculatingMovement();
-
         CameraMovement();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Cursor.lockState = CursorLockMode.None;
     }
 
     void CalculatingMovement()
