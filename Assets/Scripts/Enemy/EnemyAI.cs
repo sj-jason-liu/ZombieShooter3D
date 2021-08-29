@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    public enum EnemyState
+    {
+        Idle,
+        Chase,
+        Attack
+    }
+
     [SerializeField]
     private float _speed = 3f;
     [SerializeField]
     private float _gravity = 1f;
+    [SerializeField]
+    private float _attackDelay = 1.5f;
+    private float _nextAttack = -1f;
 
-    //reference of character controller
+    [SerializeField]
+    private EnemyState _currentState = EnemyState.Chase;
+
     private CharacterController _controller;
-
-    private Player _player;
+    private Transform _player;
+    private Health _playerHealth;
 
     private void Start()
     {
@@ -21,16 +33,30 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.LogError("Character Controller is NULL!");
         }
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        if(_player == null)
-        {
-            Debug.LogError("Player is NULL!");
-        }
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerHealth = _player.GetComponent<Health>();
+        if (_player == null || _playerHealth == null)
+            Debug.LogError("Player or PlayerHealth is NULL");
     }
 
     private void Update()
     {
-        Vector3 direction = (_player.transform.position - transform.position).normalized;
+        if(_currentState == EnemyState.Chase)
+            CalculateMovement();
+
+        if(_currentState == EnemyState.Attack)
+        {
+            if(Time.time > _nextAttack)
+            {
+                _playerHealth.Damage(10);
+                _nextAttack = Time.time + _attackDelay;
+            }
+        }
+    }
+
+    void CalculateMovement()
+    {
+        Vector3 direction = (_player.position - transform.position).normalized;
         direction.y = 0;
         transform.localRotation = Quaternion.LookRotation(direction);
         Vector3 velocity = direction * _speed;
@@ -40,5 +66,17 @@ public class EnemyAI : MonoBehaviour
         }
 
         _controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+            _currentState = EnemyState.Attack;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+            _currentState = EnemyState.Chase; 
     }
 }

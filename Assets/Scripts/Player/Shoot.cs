@@ -13,10 +13,10 @@ public class Shoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ExcuteShoot();
+        ExecuteShoot();
     }
 
-    void ExcuteShoot()
+    void ExecuteShoot()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -24,7 +24,9 @@ public class Shoot : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("Just hit: " + hit.transform.name);
+                Health health = hit.transform.GetComponent<Health>();
+                if (health != null)
+                    health.Damage(5);
             }
         }
     }
