@@ -41,16 +41,22 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if(_currentState == EnemyState.Chase)
-            CalculateMovement();
-
-        if(_currentState == EnemyState.Attack)
+        switch(_currentState)
         {
-            if(Time.time > _nextAttack)
-            {
-                _playerHealth.Damage(10);
-                _nextAttack = Time.time + _attackDelay;
-            }
+            case EnemyState.Idle:
+                break;
+            case EnemyState.Chase:
+                CalculateMovement();
+                break;
+            case EnemyState.Attack:
+                if (Time.time > _nextAttack)
+                {
+                    if (_player != null)
+                        _playerHealth.Damage(10);
+
+                    _nextAttack = Time.time + _attackDelay;
+                }
+                break;
         }
     }
 
