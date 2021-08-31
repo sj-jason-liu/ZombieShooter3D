@@ -121,25 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &187659111 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1283167717683257055, guid: 3d4b6705e87aa4c1ea9d543ec9457000,
-    type: 3}
-  m_PrefabInstance: {fileID: 2567023881216677668}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &187659112
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187659111}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &703000481
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +550,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304df1e2b990c4239a466c2410a5985f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bloodPrefab: {fileID: 8729043021112652020, guid: 819c6268a8e154147984aa729b6f126b,
+    type: 3}
 --- !u!114 &742726762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,7 +736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.854, z: -3.661}
+  m_LocalPosition: {x: 0, y: 1.854, z: -3.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 742726758}
@@ -1092,16 +1075,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 473749149207110370, guid: 3d4b6705e87aa4c1ea9d543ec9457000,
-        type: 3}
-      propertyPath: _maxHealth
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 473749149207110370, guid: 3d4b6705e87aa4c1ea9d543ec9457000,
-        type: 3}
-      propertyPath: _minHealth
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 894352372767189674, guid: 3d4b6705e87aa4c1ea9d543ec9457000,
         type: 3}
       propertyPath: m_RootOrder
@@ -1161,16 +1134,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1283167717683257055, guid: 3d4b6705e87aa4c1ea9d543ec9457000,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7982909309926444464, guid: 3d4b6705e87aa4c1ea9d543ec9457000,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d4b6705e87aa4c1ea9d543ec9457000, type: 3}

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7982909309926444464}
   - component: {fileID: 4449880457563255240}
   - component: {fileID: 473749149207110370}
+  - component: {fileID: 187659112}
+  - component: {fileID: 187659119}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -94,7 +96,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1
-  m_Radius: 0.5
+  m_Radius: 0.51
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -114,6 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _gravity: 1
+  _attackDelay: 1.5
+  _currentState: 1
 --- !u!114 &473749149207110370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,3 +130,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b160b3577d4449d8e92aae98029b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 50
+  _minHealth: 1
+--- !u!135 &187659112
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283167717683257055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &187659119
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283167717683257055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
