@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private CharacterController _character;
+    private PlayerAnimation _anim;
 
     [SerializeField]
     private float _speed = 3f;
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour
     private float _gravity = 1f;
     [SerializeField]
     private float _jumpForce = 3f;
-    [SerializeField][Range(0.5f, 2f)]
+    [SerializeField] [Range(0.5f, 2f)]
     private float _mouseSensitivity = 1f;
     private float _yVelocity;
 
@@ -27,11 +28,16 @@ public class Player : MonoBehaviour
             Debug.LogError("Character Controller is NULL!");
         }
         _camera = Camera.main;
-        if(_camera == null)
+        if (_camera == null)
         {
             Debug.LogError("Camera is NULL!");
         }
         Cursor.lockState = CursorLockMode.Locked;
+        _anim = GetComponent<PlayerAnimation>();
+        if (_anim == null)
+        {
+            Debug.LogError("Player Animation is NULL!");
+        }
     }
 
     // Update is called once per frame
@@ -66,6 +72,17 @@ public class Player : MonoBehaviour
         velocity.y = _yVelocity;
         velocity = transform.TransformDirection(velocity);
         _character.Move(velocity * Time.deltaTime);
+        _anim.MovingSpeed(vertiInput);
+
+        if (horiInput != 0 || vertiInput != 0)
+        {
+            _anim.IsWalking(true);
+        }
+        else
+        {
+            _anim.IsWalking(false);
+        }
+        
     }
 
     void CameraMovement()

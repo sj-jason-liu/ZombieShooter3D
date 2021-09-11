@@ -600,7 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304df1e2b990c4239a466c2410a5985f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bloodPrefab: {fileID: 0}
+  _bloodPrefab: {fileID: 8729043021112652020, guid: 819c6268a8e154147984aa729b6f126b,
+    type: 3}
 --- !u!114 &785305507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,6 +618,18 @@ MonoBehaviour:
   _gravity: 1
   _jumpForce: 3
   _mouseSensitivity: 1
+--- !u!114 &785305508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785305501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8127e85b040c4fec8f4104f474815b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &987560471
 PrefabInstance:
   m_ObjectHideFlags: 0
