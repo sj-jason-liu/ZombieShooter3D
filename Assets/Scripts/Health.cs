@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
+        if (gameObject.tag == "Enemy")
+            gameObject.GetComponent<EnemyAI>().StartChasing();
         _currentHealth -= damageAmount;
         Debug.Log("The health of " + gameObject.name + " is " + _currentHealth);
         if (_currentHealth < _minHealth)

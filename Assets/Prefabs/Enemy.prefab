@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 473749149207110370}
   - component: {fileID: 187659112}
   - component: {fileID: 187659119}
+  - component: {fileID: 1861835568}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +54,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.33, z: 0}
+  m_Center: {x: 0, y: 0.42, z: 0}
 --- !u!114 &4449880457563255240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,10 +67,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732a1bfb879c04901ad460b0928de462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 2
   _gravity: 1
   _attackDelay: 1.5
-  _currentState: 1
+  _currentState: 0
 --- !u!114 &473749149207110370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +97,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
-  m_Center: {x: 0, y: 0.43, z: 0}
+  m_Center: {x: 0, y: 0.49, z: 0}
 --- !u!65 &187659119
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -108,8 +109,27 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.69417906, y: 1.7632314, z: 0.32703036}
-  m_Center: {x: 0.014760256, y: 0.3816157, z: 0.007996291}
+  m_Size: {x: 0.69417906, y: 1.7395473, z: 0.32703036}
+  m_Center: {x: 0.014760256, y: 0.3934578, z: 0.007996291}
+--- !u!95 &1861835568
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283167717683257055}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6509781063499334333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,6 +185,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: d66c51d65b0fd4551b1572b1d4fa5519, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: aa733691111e441de9a27dfa5b834362, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66c51d65b0fd4551b1572b1d4fa5519, type: 3}
 --- !u!4 &6509781063499733433 stripped

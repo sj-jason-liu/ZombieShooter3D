@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
         velocity = transform.TransformDirection(velocity);
         _character.Move(velocity * Time.deltaTime);
         _anim.MovingSpeed(vertiInput);
+        _anim.StrafeSpeed(horiInput);
 
         if (horiInput != 0 || vertiInput != 0)
         {

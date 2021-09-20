@@ -18,9 +18,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private float _attackDelay = 1.5f;
     private float _nextAttack = -1f;
+    private float _detectRange = 5f;
 
     [SerializeField]
-    private EnemyState _currentState = EnemyState.Chase;
+    private EnemyState _currentState = EnemyState.Idle;
 
     private CharacterController _controller;
     private Transform _player;
@@ -39,6 +40,8 @@ public class EnemyAI : MonoBehaviour
             Debug.LogError("Player or PlayerHealth is NULL");
     }
 
+    //if Player is out of range or Enemy has not been attacked
+    //state is idle
     private void Update()
     {
         switch(_currentState)
@@ -58,6 +61,9 @@ public class EnemyAI : MonoBehaviour
                 }
                 break;
         }
+
+        if (Vector3.Distance(transform.position, _player.position) < _detectRange)
+            _currentState = EnemyState.Chase;
     }
 
     void CalculateMovement()
@@ -74,6 +80,12 @@ public class EnemyAI : MonoBehaviour
         _controller.Move(velocity * Time.deltaTime);
     }
 
+    public void StartChasing()
+    {
+        _currentState = EnemyState.Chase;
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -84,5 +96,11 @@ public class EnemyAI : MonoBehaviour
     {
         if (other.tag == "Player")
             _currentState = EnemyState.Chase; 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, _detectRange);
+        Gizmos.color = Color.red;
     }
 }

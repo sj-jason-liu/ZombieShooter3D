@@ -6,6 +6,7 @@ public class PlayerAnimation : MonoBehaviour
 {
     private Animator _animator;
     private float _speed;
+    private float _strafeSpeed;
     private bool _isWalking = false;
 
     void Start()
@@ -17,12 +18,18 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
         _animator.SetFloat("Speed", _speed);
+        _animator.SetFloat("StrafeSpeed", _strafeSpeed);
         _animator.SetBool("IsWalking", _isWalking);
     }
 
     public void MovingSpeed(float speed)
     {
         _speed = speed;
+    }
+
+    public void StrafeSpeed(float strafeSpeed)
+    {
+        _strafeSpeed = strafeSpeed;
     }
 
     public void IsWalking(bool walkingState)
