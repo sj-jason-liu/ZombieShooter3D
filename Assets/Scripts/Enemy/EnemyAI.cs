@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     private CharacterController _controller;
     private Transform _player;
     private Health _playerHealth;
+    private EnemyAnimation _animator;
 
     private void Start()
     {
@@ -38,6 +39,9 @@ public class EnemyAI : MonoBehaviour
         _playerHealth = _player.GetComponent<Health>();
         if (_player == null || _playerHealth == null)
             Debug.LogError("Player or PlayerHealth is NULL");
+        _animator = GetComponentInChildren<EnemyAnimation>();
+        if (_animator == null)
+            Debug.LogError("Enemy Animator is NULL!");
     }
 
     //if Player is out of range or Enemy has not been attacked
@@ -63,7 +67,10 @@ public class EnemyAI : MonoBehaviour
         }
 
         if (Vector3.Distance(transform.position, _player.position) < _detectRange)
+        {
             _currentState = EnemyState.Chase;
+            _animator.ChasingTrigger();
+        }
     }
 
     void CalculateMovement()
@@ -83,6 +90,7 @@ public class EnemyAI : MonoBehaviour
     public void StartChasing()
     {
         _currentState = EnemyState.Chase;
+        _animator.ChasingTrigger();
     }
 
 
@@ -95,7 +103,10 @@ public class EnemyAI : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
-            _currentState = EnemyState.Chase; 
+        {
+            _currentState = EnemyState.Chase;
+            _animator.ChasingTrigger();
+        }
     }
 
     private void OnDrawGizmos()
