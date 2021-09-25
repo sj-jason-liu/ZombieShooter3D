@@ -16,4 +16,16 @@ public class EnemyAnimation : MonoBehaviour
     {
         _anim.SetTrigger("Chasing");
     }
+
+    public void StartAttacking(bool canAttack)
+    {
+        _anim.SetBool("CanAttack", canAttack);
+    }
+
+    public void Attacking()
+    {
+        EnemyAI enemy = gameObject.GetComponentInParent<EnemyAI>();
+        if(enemy != null)
+            enemy.Attacking();
+    }
 }

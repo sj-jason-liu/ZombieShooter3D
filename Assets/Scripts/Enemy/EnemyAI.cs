@@ -56,13 +56,13 @@ public class EnemyAI : MonoBehaviour
                 CalculateMovement();
                 break;
             case EnemyState.Attack:
-                if (Time.time > _nextAttack)
-                {
-                    if (_player != null)
-                        _playerHealth.Damage(10);
+                //if (Time.time > _nextAttack)
+                //{
+                //    if (_player != null)
+                //        _playerHealth.Damage(10);
 
-                    _nextAttack = Time.time + _attackDelay;
-                }
+                //    _nextAttack = Time.time + _attackDelay;
+                //}
                 break;
         }
 
@@ -93,11 +93,20 @@ public class EnemyAI : MonoBehaviour
         _animator.ChasingTrigger();
     }
 
+    public void Attacking()
+    {
+        if (_player != null)
+            _playerHealth.Damage(10);
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
+        {
             _currentState = EnemyState.Attack;
+            _animator.StartAttacking(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -105,7 +114,7 @@ public class EnemyAI : MonoBehaviour
         if (other.tag == "Player")
         {
             _currentState = EnemyState.Chase;
-            _animator.ChasingTrigger();
+            _animator.StartAttacking(false);
         }
     }
 
