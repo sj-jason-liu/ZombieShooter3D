@@ -97,7 +97,17 @@ public class Player : MonoBehaviour
 
         Vector3 currentCameraRotation = _camera.transform.localEulerAngles;
         currentCameraRotation.x += mouseY * -1 * _mouseSensitivity;
-        currentCameraRotation.x = Mathf.Clamp(currentCameraRotation.x, 0f, 12f);
+        currentCameraRotation.x = Mathf.Clamp(currentCameraRotation.x, 0f, 8f);
         _camera.transform.localRotation = Quaternion.AngleAxis(currentCameraRotation.x, Vector3.right);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Ammo")
+        {
+            int getAmmo = other.GetComponent<Ammo>().GetAmmo();
+            AmmoManager.Instance.AddAmmo(getAmmo);
+            Destroy(other.gameObject);
+        }
     }
 }

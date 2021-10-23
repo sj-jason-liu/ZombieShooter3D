@@ -8,7 +8,8 @@ public class EnemyAI : MonoBehaviour
     {
         Idle,
         Chase,
-        Attack
+        Attack,
+        Die
     }
 
     [SerializeField]
@@ -18,7 +19,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private float _attackDelay = 1.5f;
     private float _nextAttack = -1f;
+    [SerializeField]
     private float _detectRange = 5f;
+
+    private bool _isDead;
 
     [SerializeField]
     private EnemyState _currentState = EnemyState.Idle;
@@ -64,9 +68,12 @@ public class EnemyAI : MonoBehaviour
                 //    _nextAttack = Time.time + _attackDelay;
                 //}
                 break;
+            case EnemyState.Die:
+                _isDead = true;
+                break;
         }
 
-        if (Vector3.Distance(transform.position, _player.position) < _detectRange)
+        if (Vector3.Distance(transform.position, _player.position) < _detectRange && !_isDead)
         {
             _currentState = EnemyState.Chase;
             _animator.ChasingTrigger();
@@ -99,10 +106,17 @@ public class EnemyAI : MonoBehaviour
             _playerHealth.Damage(10);
     }
 
+    public void EnemyDeath()
+    {
+        _currentState = EnemyState.Die;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<CharacterController>().enabled = false;
+        _animator.Death();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !_isDead)
         {
             _currentState = EnemyState.Attack;
             _animator.StartAttacking(true);
@@ -111,7 +125,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !_isDead)
         {
             _currentState = EnemyState.Chase;
             _animator.StartAttacking(false);

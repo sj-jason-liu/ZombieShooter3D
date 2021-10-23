@@ -24,48 +24,68 @@ public class Gun_Fire_Pistol : MonoBehaviour
     [SerializeField]
     private AudioSource _audioSource;
 
+    [SerializeField]
+    private GameObject _bloodPrefab;
+
     public bool FullAuto;
+    public bool hasAmmo = true;
     
-    // Start is called before the first frame update
     void Start()
     {
         _anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if(hasAmmo)
         {
-            Debug.Log("Shoot gun");
-            if (FullAuto == false)
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                _anim.SetTrigger("Fire");
+                Debug.Log("Shoot gun");
+                if (FullAuto == false)
+                {
+                    _anim.SetTrigger("Fire");
+                }
+
+                if (FullAuto == true)
+                {
+                    _anim.SetBool("Automatic_Fire", true);
+                }
             }
 
-            if (FullAuto == true)
+            if (Input.GetKeyUp(KeyCode.Mouse0))
             {
-                _anim.SetBool("Automatic_Fire", true);
-            }
-        }
- 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            if (FullAuto == true)
-            {
-                _anim.SetBool("Automatic_Fire", false);
+                if (FullAuto == true)
+                {
+                    _anim.SetBool("Automatic_Fire", false);
+                }
+
+                if (FullAuto == false)
+                {
+                    _anim.SetBool("Fire", false);
+                }
             }
 
-            if (FullAuto == false)
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                _anim.SetBool("Fire", false);
+                _anim.SetTrigger("Reload");
+            }
+        }
+        else
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                //out of ammo sound
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetMouseButtonDown(1))
         {
-            _anim.SetTrigger("Reload");
+            //switching sound effect
+            FullAuto = !FullAuto;
         }
+
+        hasAmmo = AmmoManager.Instance.HasAmmo();
     }
 
     public void FireGunParticles()
@@ -82,5 +102,33 @@ public class Gun_Fire_Pistol : MonoBehaviour
     {
         _audioSource.pitch = Random.Range(0.9f, 1.1f);
         _audioSource.PlayOneShot(_gunShotAudioClip);
+    }
+
+    public void CombineFireAction()
+    {
+        ExecuteFire();
+        DecreaseAmmo();
+    }
+    
+    void DecreaseAmmo()
+    {
+        AmmoManager.Instance.DecreaseAmmo();
+    }
+
+    void ExecuteFire()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 0, QueryTriggerInteraction.Ignore))
+        {
+            Health health = hit.transform.GetComponent<Health>();
+            if (health != null)
+            {
+                GameObject instBlood = Instantiate(_bloodPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+                instBlood.transform.SetParent(hit.transform);
+                Destroy(instBlood, 0.5f);
+                health.Damage(5);
+            }
+        }
     }
 }

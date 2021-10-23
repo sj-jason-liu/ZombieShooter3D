@@ -15,7 +15,7 @@ public class Shoot : MonoBehaviour
 
     void ExecuteShoot()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
@@ -30,6 +30,6 @@ public class Shoot : MonoBehaviour
                     health.Damage(5);
                 }
             }
-        }
+        }*/
     }
 }

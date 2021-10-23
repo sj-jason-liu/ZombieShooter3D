@@ -26,6 +26,9 @@ public class Health : MonoBehaviour
         _currentHealth -= damageAmount;
         Debug.Log("The health of " + gameObject.name + " is " + _currentHealth);
         if (_currentHealth < _minHealth)
-            Destroy(gameObject);
+        {
+            if (gameObject.tag == "Enemy")
+                gameObject.GetComponent<EnemyAI>().EnemyDeath();
+        }
     }
 }

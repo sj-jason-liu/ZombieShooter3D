@@ -28,4 +28,9 @@ public class EnemyAnimation : MonoBehaviour
         if(enemy != null)
             enemy.Attacking();
     }
+
+    public void Death()
+    {
+        _anim.SetTrigger("EnemyDeath");
+    }
 }
