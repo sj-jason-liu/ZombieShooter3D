@@ -29,6 +29,7 @@ public class Gun_Fire_Pistol : MonoBehaviour
 
     public bool FullAuto;
     public bool hasAmmo = true;
+    public bool canReload;
     
     void Start()
     {
@@ -65,26 +66,32 @@ public class Gun_Fire_Pistol : MonoBehaviour
                     _anim.SetBool("Fire", false);
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                _anim.SetTrigger("Reload");
-            }
         }
         else
         {
+            _anim.SetBool("Automatic_Fire", false);
             if(Input.GetMouseButtonDown(0))
             {
                 //out of ammo sound
             }
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (canReload)
+            {
+                _anim.SetTrigger("Reload");
+                AmmoManager.Instance.ReloadMagazine();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
         {
             //switching sound effect
             FullAuto = !FullAuto;
         }
 
+        canReload = AmmoManager.Instance.CanReload();
         hasAmmo = AmmoManager.Instance.HasAmmo();
     }
 

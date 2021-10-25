@@ -16,48 +16,69 @@ public class AmmoManager : MonoBehaviour
     }
 
     [SerializeField]
-    private int _currentAmmo;
+    private int _currentAmmo, _maxMagazine;
+    private int _magAmmo;
 
-    private bool _hasAmmo = true;
+    private bool _canShoot = true;
+    private bool _canReload = true;
 
     private void Awake()
     {
         _instance = this;
-        UIManager.Instance.UpdateAmmo(_currentAmmo);
+        _magAmmo = _maxMagazine;
+        UIManager.Instance.UpdateAmmo(_magAmmo, _currentAmmo);
     }
 
-    //add ammo method
-    //communicate with UIManager
+    private void Update()
+    {
+        if(_currentAmmo == 0)
+        {
+            _canReload = false;
+        }
+    }
+
     public void AddAmmo(int pickedAmmo)
     {
-        _hasAmmo = true;
+        _canReload = true;
+        _canShoot = true;
         _currentAmmo += pickedAmmo;
-        UIManager.Instance.UpdateAmmo(_currentAmmo);
+        UIManager.Instance.UpdateAmmo(_magAmmo, _currentAmmo);
     }
 
-    //decrease ammo int method
-    //if ammo > 0
-        //decrease 1 and return value to UIManager
-    //else
-        //return 0 value to UIManager
-        //return to GunFirePistol
     public void DecreaseAmmo()
     {
-        _currentAmmo--;
-        if(_currentAmmo > 0)
+        _magAmmo--;
+        if(_magAmmo <= 0)
         {
-            UIManager.Instance.UpdateAmmo(_currentAmmo);
+            _magAmmo = 0;
+            _canShoot = false;
+        }
+        UIManager.Instance.UpdateAmmo(_magAmmo, _currentAmmo);
+    }
+
+    public void ReloadMagazine()
+    {
+        if((_magAmmo + _currentAmmo) > _maxMagazine)
+        {
+            _currentAmmo -= _maxMagazine - _magAmmo;
+            _magAmmo = _maxMagazine;
         }
         else
         {
+            _magAmmo += _currentAmmo;
             _currentAmmo = 0;
-            UIManager.Instance.UpdateAmmo(0);
-            _hasAmmo = false;
         }
+        _canShoot = true;
+        UIManager.Instance.UpdateAmmo(_magAmmo, _currentAmmo);
     }
 
     public bool HasAmmo()
     {
-        return _hasAmmo;
+        return _canShoot;
+    }
+
+    public bool CanReload()
+    {
+        return _canReload;
     }
 }

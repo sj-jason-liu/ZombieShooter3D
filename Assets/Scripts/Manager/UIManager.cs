@@ -17,16 +17,18 @@ public class UIManager : MonoBehaviour
     }
 
     [SerializeField]
-    private Text _ammoText;
+    private Text _ammoText, _magText;
     private int _ammoCount;
+    private int _magCount;
 
     private void Awake()
     {
         _instance = this;
     }
 
-    public void UpdateAmmo(int ammoCount)
+    public void UpdateAmmo(int magCount, int ammoCount)
     {
-        _ammoText.text = "Ammo: " + ammoCount;
+        _ammoText.text = "/ " + ammoCount;
+        _magText.text = "" + magCount;
     }
 }
