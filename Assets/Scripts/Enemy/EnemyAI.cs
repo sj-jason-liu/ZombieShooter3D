@@ -27,6 +27,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private EnemyState _currentState = EnemyState.Idle;
 
+    [Space][Header("Set zombie as dead body")][SerializeField]
+    private bool _deadBody;
+
     private CharacterController _controller;
     private Transform _player;
     private Health _playerHealth;
@@ -46,6 +49,9 @@ public class EnemyAI : MonoBehaviour
         _animator = GetComponentInChildren<EnemyAnimation>();
         if (_animator == null)
             Debug.LogError("Enemy Animator is NULL!");
+
+        if (_deadBody == true)
+            EnemyDeath();
     }
 
     //if Player is out of range or Enemy has not been attacked

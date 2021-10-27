@@ -31,7 +31,7 @@ public class AmmoManager : MonoBehaviour
 
     private void Update()
     {
-        if(_currentAmmo == 0)
+        if(_currentAmmo == 0 || _magAmmo == _maxMagazine)
         {
             _canReload = false;
         }
@@ -48,6 +48,7 @@ public class AmmoManager : MonoBehaviour
     public void DecreaseAmmo()
     {
         _magAmmo--;
+        _canReload = true;
         if(_magAmmo <= 0)
         {
             _magAmmo = 0;
