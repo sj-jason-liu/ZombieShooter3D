@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Text _ammoText, _magText;
+    [SerializeField]
+    private Slider _healthBar;
     private int _ammoCount;
     private int _magCount;
 
@@ -30,5 +32,11 @@ public class UIManager : MonoBehaviour
     {
         _ammoText.text = "/ " + ammoCount;
         _magText.text = "" + magCount;
+    }
+
+    public void UpdateHealth(int currentHealth, int maxHealth)
+    {
+        float healthValue = (float) currentHealth / maxHealth;
+        _healthBar.value = healthValue;
     }
 }

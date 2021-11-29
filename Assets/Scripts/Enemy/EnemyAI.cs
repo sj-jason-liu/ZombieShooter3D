@@ -61,9 +61,11 @@ public class EnemyAI : MonoBehaviour
         switch(_currentState)
         {
             case EnemyState.Idle:
+                CalculateGravity();
                 break;
             case EnemyState.Chase:
                 CalculateMovement();
+                _animator.ChasingTrigger();
                 break;
             case EnemyState.Attack:
                 //if (Time.time > _nextAttack)
@@ -84,6 +86,12 @@ public class EnemyAI : MonoBehaviour
             _currentState = EnemyState.Chase;
             _animator.ChasingTrigger();
         }
+    }
+
+    void CalculateGravity()
+    {
+        if(!_controller.isGrounded)
+            _controller.Move(transform.up * -_gravity * Time.deltaTime);
     }
 
     void CalculateMovement()

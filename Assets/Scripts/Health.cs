@@ -11,6 +11,8 @@ public class Health : MonoBehaviour
     void Start()
     {
         _currentHealth = _maxHealth;
+        if (gameObject.tag == "Player")
+            UIManager.Instance.UpdateHealth(_currentHealth, _maxHealth);
     }
 
     // Update is called once per frame
@@ -24,7 +26,9 @@ public class Health : MonoBehaviour
         if (gameObject.tag == "Enemy")
             gameObject.GetComponent<EnemyAI>().StartChasing();
         _currentHealth -= damageAmount;
-        Debug.Log("The health of " + gameObject.name + " is " + _currentHealth);
+        if (gameObject.tag == "Player")
+            UIManager.Instance.UpdateHealth(_currentHealth, _maxHealth);
+        //Debug.Log("The health of " + gameObject.name + " is " + _currentHealth);
         if (_currentHealth < _minHealth)
         {
             if (gameObject.tag == "Enemy")

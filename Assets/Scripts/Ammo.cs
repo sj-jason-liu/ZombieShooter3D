@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ammo : MonoBehaviour
+public class Ammo : MonoBehaviour, IPickable
 {
     [SerializeField]
     private int _ammoAmount = 15;
@@ -12,8 +12,9 @@ public class Ammo : MonoBehaviour
         transform.Rotate(0, 0.3f, 0 * Time.deltaTime, Space.World);
     }
 
-    public int GetAmmo()
+    public void PickUp()
     {
-        return _ammoAmount;
+        AmmoManager.Instance.AddAmmo(_ammoAmount);
+        Destroy(gameObject);
     }
 }

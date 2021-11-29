@@ -105,11 +105,36 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Ammo")
+        if (other.CompareTag("Interactable")) //doors can be opened
         {
-            int getAmmo = other.GetComponent<Ammo>().GetAmmo();
-            AmmoManager.Instance.AddAmmo(getAmmo);
-            Destroy(other.gameObject);
+            other.GetComponentInParent<IUnlockable>().CheckDoorAvailable();
+        }
+        else if(other.CompareTag("Pickable"))
+        {
+            //display object name on UI text column
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            if (other.CompareTag("Pickable"))
+            {
+                other.GetComponent<IPickable>().PickUp();
+            }
+            else if (other.CompareTag("Interactable")) //doors can be opened
+            {
+                other.GetComponentInParent<IUnlockable>().OpenDoor();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Pickable"))
+        {
+            //disable showing object name
         }
     }
 }
